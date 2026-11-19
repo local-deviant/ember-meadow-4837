@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice City Cover Studio — GTA-style cover maker</title>
+<meta name="description" content="Turn your own photos into a multi-panel GTA-style cover poster: pick a layout, a sunset grade, a bold caption, export PNG in three post sizes. Fully offline.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">★</span>
+    <div>
+      <h1>VICE CITY COVER STUDIO</h1>
+      <p class="tagline">Your photos → a poster-worthy cover. No upload, no account, fully offline.</p>
+    </div>
+  </div>
+  <p class="origin-note">Original art maker. No game logos, artwork or fonts — just your photos.</p>
+</header>
+
+<main id="editor" class="editor">
+  <aside class="controls" aria-label="Cover controls">
+    <section class="group">
+      <h2>1 · Photos</h2>
+      <div id="dropZone" class="drop-zone">
+        <p><strong>Drop photos here</strong> or</p>
+        <label class="file-btn" for="fileInput">Choose photos…</label>
+        <input id="fileInput" type="file" accept="image/*" multiple hidden>
+        <p class="hint">JPG or PNG, stays on your machine.</p>
+      </div>
+      <div id="sampleBtns" class="sample-btns">
+        <button type="button" data-sample="0" class="chip">Sample · Boulevard</button>
+        <button type="button" data-sample="1" class="chip">Sample · Pier</button>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2>2 · Layout</h2>
+      <div id="layoutBtns" class="btn-row"></div>
+      <p class="hint">Five layouts — hero, nine-panel grid, full bleed, tilted snapshots, story.</p>
+    </section>
+
+    <section class="group">
+      <h2>3 · Sunset grade</h2>
+      <div id="gradeBtns" class="btn-row"></div>
+      <label class="toggle"><input id="grainToggle" type="checkbox" checked> Film grain</label>
+      <label class="toggle"><input id="vignetteToggle" type="checkbox" checked> Vignette</label>
+    </section>
+
+    <section class="group">
+      <h2>4 · Lettering</h2>
+      <label class="field">Caption
+        <input id="captionInput" type="text" value="SUNSET HEIST" maxlength="28" autocomplete="off">
+      </label>
+      <label class="field">Subtitle
+        <input id="subtitleInput" type="text" value="Vice City Nights" maxlength="40" autocomplete="off">
+      </label>
+      <p class="hint">Caption auto-fits the title band — big and readable even at thumbnail size.</p>
+    </section>
+
+    <section class="group">
+      <h2>5 · Selected panel</h2>
+      <p id="panelLabel" class="panel-label">Panel 1</p>
+      <label class="field">Photo in this panel
+        <select id="panelPhoto"></select>
+      </label>
+      <label class="field">Zoom <span id="zoomValue">1.12×</span>
+        <input id="zoomRange" type="range" min="1" max="3.5" step="0.01" value="1.12">
+      </label>
+      <div class="btn-row">
+        <button id="rotLeft" type="button" class="chip">⟲ −5°</button>
+        <button id="rotRight" type="button" class="chip">+5° ⟳</button>
+        <button id="flipBtn" type="button" class="chip">Flip photo</button>
+        <button id="resetPanel" type="button" class="chip">Reset panel</button>
+      </div>
+      <p class="hint">Or drag the photo inside the preview to pan it, scroll to zoom, click a panel to pick it.</p>
+    </section>
+
+    <section class="group">
+      <h2>6 · Export PNG</h2>
+      <div id="sizeBtns" class="btn-row"></div>
+      <div class="btn-row">
+        <button id="exportBtn" type="button" class="primary-btn">Export this size</button>
+        <button id="exportAllBtn" type="button" class="primary-btn alt">Export all 3</button>
+      </div>
+    </section>
+  </aside>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="previewCanvas" width="960" height="540"></canvas>
+    <p id="statusLine" class="status" role="status">Loading photos…</p>
+  </section>
+</main>
+
+<div id="shotStage" class="shot-stage" hidden>
+  <canvas id="shotCanvas"></canvas>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
