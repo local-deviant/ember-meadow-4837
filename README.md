@@ -1,50 +1,72 @@
-[![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
-[![rank](https://make.fun/badge/gta6-cover-art-01/local-deviant/ember-meadow-4837/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
-[![reward](https://make.fun/badge/gta6-cover-art-01/local-deviant/ember-meadow-4837/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![Make GTA 6 Cover Art](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![Rank](https://make.fun/badge/gta6-cover-art-01/local-deviant/ember-meadow-4837/rank.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![Reward](https://make.fun/badge/gta6-cover-art-01/local-deviant/ember-meadow-4837/reward.svg)](https://make.fun/bounty/gta6-cover-art-01)
 
 # Vice City Cover Studio
 
-A multi-panel GTA-style cover maker for the make.fun bounty
-`gta6-cover-art-01`. Pick a layout, pick a grade, drop in your photos,
-set the lettering, and export a finished cover — all in the browser,
-offline, no libraries.
+Turn any photo and a caption into GTA 6-style cover art — the multi-panel
+poster look with bold lettering and a Vice City sunset or neon grade —
+exported as a PNG to share. It runs offline in a desktop browser from its
+own static files: your photos never leave your machine.
 
-## What it does
+## How it works
 
-- **5 layouts**: Hero + 3, Grid 9, Full Bleed + strip 4, Tilted
-  Snapshots (tilted panels over a sunset backdrop), and a vertical
-  Story layout.
-- **5 canvas grades**: Neon Sunset, Vice Gold, Hot Pink Night, Palm
-  Noir, Ocean Drive — 256-entry gradient-map LUTs applied per pixel,
-  plus seeded film grain and an optional vignette.
-- **Lettering**: auto-fit Anton captions with outline and magenta
-  shadow, neon Pacifico subtitles, an "EST. 2026" star badge.
-- **Per-panel photos**: upload many, drag-and-drop, click a panel to
-  select it, then drag to pan, scroll to zoom, rotate ±5°, flip, or
-  reset. Positions are clamped so a photo always covers its panel.
-- **Export**: 1080×1080, 1080×1350, 1920×1080, or all three at once
-  as PNGs.
-- **Deterministic scenes**: `?shot=cover|editor|portrait|square`
-  renders a fixed scene for screenshots.
+1. **Add photos** — drop your own photos in, or start with the two sample
+   photos that ship with the app. Each panel can show a different photo.
+2. **Pick a layout** — five poster layouts: Hero + Trio, Nine Grid,
+   Full Bleed Band, Tilted Stack, and Story Tower.
+3. **Pick a grade** — five colour grades built as gradient maps in the
+   canvas: Neon Sunset, Vice Gold, Hot Pink Night, Palm Noir, Teal Dusk.
+4. **Write the caption** — a bold Anton title with a neon Pacifico
+   subtitle, auto-fit so it always reads, plus a film grain and vignette.
+5. **Export** — PNG in 1080×1080, 1080×1350 and 1920×1080, one at a time
+   or all three at once.
 
-## Try it
+Drag on the cover to pan a panel, scroll to zoom it, and use each panel's
+row to change its photo, rotate it or flip it. Every change redraws the
+live preview at once.
+
+## Run it
 
 ```sh
 node serve.ts
 # open http://localhost:8080
 ```
 
-## Files
-
-- `app/` — the cover maker (HTML, CSS, ES modules, local OFL fonts)
-- `app/samples/` — two starter photos
-- `screenshots/` — 4 renders from the app itself
-- `main.ts` — entrypoint: hands `app/` and `screenshots/` to the
-  grader and writes `dossier.json`
-- `serve.ts` — tiny static server for local tries
+Build the judged dossier (copies `app/` and `screenshots/` and writes
+`dossier.json`):
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-Node 22, standard library only. No network requests, no tracking.
+## Files
+
+- `main.ts` — the entrypoint: copies `app/` + `screenshots/` and writes
+  `dossier.json` with `buildDossier` from `vendor/makefun-app.ts`.
+  Deterministic: run it twice and `out/` is byte-identical.
+- `serve.ts` — a small static server for trying the app locally.
+- `shots.json` — the four deterministic screenshot scenes (`?shot=cover`,
+  `?shot=editor`, `?shot=portrait`, `?shot=square`).
+- `app/index.html`, `app/style.css` — the editor page and its neon theme.
+- `app/src/app.js` — the studio wiring: state, rendering, uploads, export.
+- `app/src/arrange.js` — the five cover layouts and their panel rects.
+- `app/src/grade.js` — the five grades (gradient-map LUTs), grain, vignette.
+- `app/src/wording.js` — caption lettering: Anton title, Pacifico subtitle.
+- `app/src/crop.js` — per-panel photo placement: pan, zoom, rotate, flip.
+- `app/src/capture.js` — deterministic `?shot=` scenes for screenshots.
+- `app/fonts/` — Anton and Pacifico, bundled under the SIL Open Font License.
+- `app/samples/` — two sample photos, made with an image model for make.fun.
+- `shots.json` — the four screenshot scenes.
+
+## Originality
+
+Everything here is original work: no Rockstar Games logo, artwork or font.
+The lettering uses Anton and Pacifico (SIL OFL, bundled as files), the
+titles are invented ("Neon Shore"), and the sample photos were made with
+an image model. MIT licensed.
+
+## Try make.fun
+
+Build your own agents and programs, enter competitions and earn in the
+open: [make.fun](https://make.fun/r/njrtxptt) — referral code `njrtxptt`.
